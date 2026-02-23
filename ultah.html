@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBD Nayla Nuzullina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root { --p: #ff758c; --s: #ff7eb3; --gold: #ffd700; }
+        body {
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd);
+            background-size: 400% 400%; animation: gradientBG 15s ease infinite;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 100vh; margin: 0; font-family: 'Poppins', sans-serif; overflow: hidden;
+        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* Background Decorations */
+        .bg-deco { position: absolute; pointer-events: none; animation: floatUp 8s infinite linear; opacity: 0.6; z-index: 1; }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Navigasi Bawah */
+        .nav-bar {
+            position: fixed; bottom: 20px; background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 50px;
+            display: flex; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 100;
+        }
+        .nav-item { cursor: pointer; font-size: 20px; transition: 0.3s; padding: 5px; }
+        .nav-item:hover { transform: scale(1.3); }
+
+        /* Card System */
+        .section { display: none; text-align: center; z-index: 10; width: 90%; max-width: 380px; }
+        .card { 
+            background: #fffef0; padding: 35px 25px; border-radius: 10px 25px 25px 10px; 
+            box-shadow: 15px 10px 30px rgba(0,0,0,0.15), inset 20px 0 15px -10px rgba(0,0,0,0.1); 
+            border: 1px solid #ddd; position: relative;
+        }
+        .card::before { content: ''; position: absolute; left: 15px; top: 0; height: 100%; width: 2px; background: rgba(0,0,0,0.05); }
+
+        .btn { background: var(--p); color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: 600; margin-top: 15px; }
+        
+        .flame { width: 15px; height: 25px; background: #ffcc00; border-radius: 50% 50% 20% 20%; margin: 0 auto -10px auto; animation: flicker 0.1s infinite; }
+        @keyframes flicker { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        .text-area { font-family: 'Dancing Script', cursive; font-size: 19px; color: #444; margin: 15px 0; min-height: 80px; }
+        .lyric { font-weight: 800; color: var(--p); font-size: 18px; display: block; }
+        .particle { position: absolute; pointer-events: none; z-index: 100; }
+    </style>
+</head>
+<body>
+
+    <div id="bg-animation"></div>
+
+    <div id="step-sing" class="section" style="display: block;">
+        <div class="card">
+            <span class="lyric">"Happy Birthday to you... <br> Panjang umurnya..."</span>
+            <p>Ayo nyanyi bareng buat hari spesialmu, Nay! 🎤</p>
+            <button class="btn" onclick="showSection('step-candle')">Tiup Lilin Yuk! →</button>
+        </div>
+    </div>
+
+    <div id="step-candle" class="section">
+        <div class="flame" id="flame"></div>
+        <div style="font-size: 90px; cursor: pointer;" onclick="blowOut(event)">🎂</div>
+        <p style="color: white; font-weight: 800; text-shadow: 1px 1px 5px rgba(0,0,0,0.2);">Klik kuenya buat tiup lilin! 🕯️</p>
+    </div>
+
+    <div id="step-book" class="section">
+        <div class="card">
+            <h2 style="color: var(--p); font-family: 'Dancing Script';">Chapter 19: Nayla</h2>
+            <div class="text-area" id="txt-book">Klik tombol di bawah buat baca...</div>
+            <button class="btn" onclick="startReading()">Baca Pesan 📖</button>
+            <p id="from" style="font-weight: 800; color: var(--p); display: none;">— @nasywamakhl</p>
+        </div>
+    </div>
+
+    <div id="step-gift" class="section">
+        <div id="gift-closed" onclick="openGift(event)">
+            <div style="font-size: 100px; cursor: pointer; transition: 0.3s;">🎁</div>
+            <p style="color: white; font-weight: 800;">Klik kadonya, Nay!</p>
+        </div>
+        <div id="gift-open" style="display: none;">
+            <div class="card">
+                <div style="font-size: 60px;">👑</div>
+                <h2 style="color: var(--p); font-family: 'Dancing Script';">You Are The Queen!</h2>
+                <p>Nayla Nuzullina deserve all the happiness!</p>
+                <button class="btn" onclick="showSection('step-sing')">Ulangi Keajaiban ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <div class="nav-item" onclick="showSection('step-sing')" title="Nyanyi">🎤</div>
+        <div class="nav-item" onclick="showSection('step-candle')" title="Kue">🎂</div>
+        <div class="nav-item" onclick="showSection('step-book')" title="Buku">📖</div>
+        <div class="nav-item" onclick="showSection('step-gift')" title="Kado">🎁</div>
+    </div>
+
+    <audio id="music" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/04/Happy-Birthday-To-You.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const message = "Hii Nayla Nuzullina! Selamat ulang tahun yang ke-19. Semoga di usia ini kamu makin bahagia, sehat, dan semua impianmu tercapai satu per satu. Stay pretty & stay kind! ✨";
+
+        // Background Berjalan (Kue, Balon, Kertas)
+        function createBg() {
+            const icons = ['🎈', '🎂', '✨', '🌸', '📄', '🎊'];
+            const container = document.getElementById('bg-animation');
+            setInterval(() => {
+                const div = document.createElement('div');
+                div.className = 'bg-deco';
+                div.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                div.style.left = Math.random() * 100 + 'vw';
+                div.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                container.appendChild(div);
+                setTimeout(() => div.remove(), 8000);
+            }, 700);
+        }
+        createBg();
+
+        // Navigasi Bebas
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            
+            // Reset kado kalau balik ke menu kado
+            if(id !== 'step-gift') {
+                document.getElementById('gift-closed').style.display = 'block';
+                document.getElementById('gift-open').style.display = 'none';
+            }
+        }
+
+        function blowOut(e) {
+            document.getElementById('flame').style.display = 'none';
+            document.getElementById('music').play();
+            spawnParticles(e);
+            setTimeout(() => showSection('step-book'), 1200);
+        }
+
+        function startReading() {
+            let i = 0;
+            const el = document.getElementById('txt-book');
+            el.innerHTML = "";
+            document.getElementById('from').style.display = "none";
+            function type() {
+                if (i < message.length) {
+                    el.innerHTML += message.charAt(i);
+                    i++; setTimeout(type, 50);
+                } else {
+                    document.getElementById('from').style.display = "block";
+                }
+            }
+            type();
+        }
+
+        function openGift(e) {
+            document.getElementById('gift-closed').style.display = 'none';
+            document.getElementById('gift-open').style.display = 'block';
+            spawnParticles(e);
+        }
+
+        function spawnParticles(e) {
+            const icons = ['✨', '💖', '🎉', '🌸'];
+            const x = e.clientX || window.innerWidth/2;
+            const y = e.clientY || window.innerHeight/2;
+            for(let i=0; i<15; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+                p.style.left = x + 'px'; p.style.top = y + 'px';
+                document.body.appendChild(p);
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 8 + 2;
+                let curX = 0, curY = 0, op = 1;
+                const move = setInterval(() => {
+                    curX += Math.cos(angle) * speed; curY += Math.sin(angle) * speed + 2;
+                    op -= 0.03;
+                    p.style.transform = `translate(${curX}px, ${curY}px)`; p.style.opacity = op;
+                    if(op <= 0) { clearInterval(move); p.remove(); }
+                }, 20);
+            }
+        }
+    </script>
+</body>
+</html>
